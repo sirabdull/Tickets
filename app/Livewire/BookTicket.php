@@ -118,7 +118,7 @@ class BookTicket extends Component
             'booking_reference' => $this->bookingReference
         ];
 
-      $tranx = (new Singlecharge(env('PAYSTACK_SECRET_KEY')))->setData([
+     (object)$tranx = (new Singlecharge(env('PAYSTACK_SECRET_KEY')))->setData([
             'email' => $this->customer->email,
             'amount' => $totalPrice * 100,
             'callback_url' => route('payment.callback'),
