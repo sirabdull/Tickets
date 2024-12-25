@@ -124,8 +124,10 @@ class BookTicket extends Component
             'callback_url' => route('payment.callback'),
             'reference' => $this->bookingReference,
             'metadata' => $metadata,
-            'subaccount' =>'ACCT_jumcbavx8jq0fip',
+            //'subaccount' =>'ACCT_jumcbavx8jq0fip',
+            'subaccount' => 'ACCT_0426h2ezjcpjwzj'
         ])->initialize();
+     
         return redirect($tranx->data->authorization_url);
     }
 

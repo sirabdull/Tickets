@@ -34,11 +34,15 @@
                     Redeem Ticket</h2>
                 <div class="space-y-4">
                     <div class="flex gap-4">
-                        <input type="text" wire:model.defer="redemptionCode" placeholder="Enter redemption code" id="redemptionCodeInput"
+                        <input type="text" wire:model.defer="redemptionCode" placeholder="Enter redemption code"
+                            id="redemptionCodeInput"
                             class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all">
-                        <button onclick="startScanner()" class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2m0 0H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <button onclick="window.startScanner()"
+                            class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v1m6 11h2m-6 0h-2m0 0H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </button>
                     </div>
@@ -52,26 +56,30 @@
 
             <script src="https://unpkg.com/html5-qrcode"></script>
             <script>
-                let html5QrcodeScanner = null;
+                window.html5QrcodeScanner = null;
 
-                function startScanner() {
+                window.startScanner = function() {
                     const reader = document.getElementById('reader');
                     reader.classList.remove('hidden');
 
-                    if (html5QrcodeScanner === null) {
-                        html5QrcodeScanner = new Html5QrcodeScanner(
-                            "reader", { fps: 10, qrbox: 250 }
+                    if (window.html5QrcodeScanner === null) {
+                        window.html5QrcodeScanner = new Html5QrcodeScanner(
+                            "reader", {
+                                fps: 10,
+                                qrbox: 250
+                            }
                         );
                     }
 
-                    html5QrcodeScanner.render((decodedText) => {
+                    window.html5QrcodeScanner.render((decodedText) => {
                         // Handle the scanned code
                         document.getElementById('redemptionCodeInput').value = decodedText;
                         @this.set('redemptionCode', decodedText);
-                        html5QrcodeScanner.clear();
+                        window.html5QrcodeScanner.clear();
                         reader.classList.add('hidden');
                     });
                 }
+            </script>
             </script>
             <!-- Collapsible Sections -->
             <div class="space-y-6">
@@ -153,7 +161,8 @@
                         <span class="font-semibold">Recent Bookings</span>
                         <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transform transition-transform"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse class="overflow-x-auto">
@@ -178,7 +187,8 @@
                                             </span>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            {{ $booking->expires_at ? \Carbon\Carbon::parse($booking->expires_at)->diffForHumans() : 'N/A' }}                                        </td>
+                                            {{ $booking->expires_at ? \Carbon\Carbon::parse($booking->expires_at)->diffForHumans() : 'N/A' }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
